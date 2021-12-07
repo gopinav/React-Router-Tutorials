@@ -11,15 +11,28 @@ import { NoMatch } from './components/NoMatch'
 import { Users } from './components/Users'
 import { UserDetails } from './components/UserDetails'
 import { Admin } from './components/Admin'
+import { AuthProvider } from './components/auth'
+import { Login } from './components/Login'
+import { Profile } from './components/Profile'
+import { RequireAuth } from './components/RequireAuth'
 
 const LazyAbout = React.lazy(() => import('./components/About'))
 
 function App() {
   return (
-    <>
+    <AuthProvider>
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route
+          path='/profile'
+          element={
+            <RequireAuth>
+              <Profile />
+            </RequireAuth>
+          }
+        />
         <Route
           path='about'
           element={
@@ -41,7 +54,7 @@ function App() {
 
         <Route path='*' element={<NoMatch />} />
       </Routes>
-    </>
+    </AuthProvider>
   )
 }
 
